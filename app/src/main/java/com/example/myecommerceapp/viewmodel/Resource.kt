@@ -1,4 +1,4 @@
-package com.example.myecommerceapp.ViewModel
+package com.example.myecommerceapp.viewmodel
 
 import java.lang.Exception
 

@@ -46,7 +46,10 @@ fun SetUpNavigation(navController: NavHostController){
                 SHOE_SIDE))
         }
         
-        composable(route = BottomBarScreen.Home.route){ HomeScreen(navController = navController)}
+        composable(route = BottomBarScreen.Home.route) {
+            /*HomeScreen(navController = navController)*/
+            com.example.myecommerceapp.f.ui.home.HomeScreen(navController = navController)
+        }
         
         composable(route = EcommerceDestinations.SplashScreen.route){ SplashScreen(navController = navController)}
         

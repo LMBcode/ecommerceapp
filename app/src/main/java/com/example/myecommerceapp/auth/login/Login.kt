@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.myecommerceapp.viewmodel.FirebaseViewModel
-import com.example.myecommerceapp.ViewModel.Resource
+import com.example.myecommerceapp.viewmodel.Resource
 import com.example.myecommerceapp.navigation.EcommerceDestinations
 import kotlinx.coroutines.launch
 
