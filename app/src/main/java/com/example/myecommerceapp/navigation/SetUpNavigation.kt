@@ -1,18 +1,15 @@
 package com.example.myecommerceapp.ui
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.myecommerceapp.*
 import com.example.myecommerceapp.navigation.*
 import com.example.myecommerceapp.screens.detailscreen.ShoeDetailScreen
 import com.example.myecommerceapp.screens.homeScreen.HomeScreen
-import com.example.myecommerceapp.register.RegisterScreen
+import com.example.myecommerceapp.auth.register.RegisterScreen
 import com.example.myecommerceapp.screens.favoritescreen.FavoriteScreen
 import com.example.myecommerceapp.screens.profilescreen.ProfileScreen
 

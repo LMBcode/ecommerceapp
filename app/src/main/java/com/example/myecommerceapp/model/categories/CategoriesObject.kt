@@ -1,4 +1,4 @@
-package com.example.myecommerceapp.screens.homeScreen.model.categories
+package com.example.myecommerceapp.model.categories
 
 import com.example.myecommerceapp.R
 import com.example.myecommerceapp.navigation.EcommerceDestinations

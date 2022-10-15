@@ -1,4 +1,4 @@
-package com.example.myecommerceapp.screens.homeScreen.model
+package com.example.myecommerceapp.model
 
 import com.example.myecommerceapp.R
 
@@ -13,7 +13,8 @@ object ShoeObject {
                     119.99,
                     R.drawable.af1frontside,
                     R.drawable.backviewaf1,
-                    R.drawable.suelaaf1
+                    R.drawable.suelaaf1,
+                    false
                 ),
                 ShoeModel(
                     "ADIDAS FORUM MID",
@@ -22,7 +23,8 @@ object ShoeObject {
                     120.00,
                     R.drawable.forummidfront,
                     R.drawable.forummidadidas,
-                    R.drawable.forumlowsuela
+                    R.drawable.forumlowsuela,
+                    false
                 ),
                 ShoeModel(
                     "Smash v2 Trainers",
@@ -31,7 +33,8 @@ object ShoeObject {
                     54.94,
                     R.drawable.smashfront,
                     R.drawable.smashback,
-                    R.drawable.smashsuela
+                    R.drawable.smashsuela,
+                    false
                 ),
                 ShoeModel(
                     "AIR JORDAN 1 RETRO",
@@ -40,7 +43,8 @@ object ShoeObject {
                     169.99,
                     R.drawable.aj1front,
                     R.drawable.aj1back,
-                    R.drawable.aj1suela
+                    R.drawable.aj1suela,
+                    false
                 ),
                 ShoeModel(
                     "NEW BALANCE 550",
@@ -49,7 +53,8 @@ object ShoeObject {
                     150.00,
                     R.drawable.newbalancefront,
                     R.drawable.newbba,
-                    R.drawable.newbalancesuela
+                    R.drawable.newbalancesuela,
+                    false
                 ),
                 ShoeModel(
                     "Stan Smith",
@@ -58,7 +63,8 @@ object ShoeObject {
                     150.00,
                     R.drawable.stansmithfront,
                     R.drawable.stansmith,
-                    R.drawable.stansmithsuela
+                    R.drawable.stansmithsuela,
+                    false
                 )
             )
         }

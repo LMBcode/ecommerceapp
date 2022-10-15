@@ -1,7 +1,7 @@
-package com.example.myecommerceapp.screens.homeScreen.model.shoe
+package com.example.myecommerceapp.model.shoe
 
 import com.example.myecommerceapp.R
-import com.example.myecommerceapp.screens.homeScreen.model.ShoeModel
+import com.example.myecommerceapp.model.ShoeModel
 
 object AllShoesObject {
     fun getShoes() : List<ShoeModel> {
@@ -13,7 +13,8 @@ object AllShoesObject {
                 119.99,
                 R.drawable.frontsideblacklogo,
                 R.drawable.backside,
-                R.drawable.suelabl
+                R.drawable.suelabl,
+                false
             ),
 
             ShoeModel(
@@ -23,7 +24,8 @@ object AllShoesObject {
                 119.99,
                 R.drawable.af1frontside,
                 R.drawable.backviewaf1,
-                R.drawable.suelaaf1
+                R.drawable.suelaaf1,
+                false
             ),
 
             ShoeModel(
@@ -33,7 +35,8 @@ object AllShoesObject {
                 169.99,
                 R.drawable.aj1front,
                 R.drawable.aj1back,
-                R.drawable.aj1suela
+                R.drawable.aj1suela,
+                false
             ),
 
             ShoeModel(
@@ -43,7 +46,8 @@ object AllShoesObject {
                 119.99,
                 R.drawable.blackaffront,
                 R.drawable.blackafback,
-                R.drawable.blackafsuela
+                R.drawable.blackafsuela,
+                false
             ),
 
             ShoeModel(
@@ -53,7 +57,8 @@ object AllShoesObject {
                 220.99,
                 R.drawable.yeezyfront,
                 R.drawable.yeezyback,
-                R.drawable.yeezysuela
+                R.drawable.yeezysuela,
+                false
             ),
 
             ShoeModel(
@@ -63,7 +68,8 @@ object AllShoesObject {
                 230.00,
                 R.drawable.jordan3retrofront,
                 R.drawable.jordan3back,
-                R.drawable.jordan3retrosuela
+                R.drawable.jordan3retrosuela,
+                false
             ),
             ShoeModel(
                 "NEW BALANCE 550",
@@ -72,7 +78,8 @@ object AllShoesObject {
                 150.00,
                 R.drawable.newbalancefront,
                 R.drawable.newbba,
-                R.drawable.newbalancesuela
+                R.drawable.newbalancesuela,
+                false
             ),
             ShoeModel(
                 "NEW BALANCE 530",
@@ -81,7 +88,8 @@ object AllShoesObject {
                 110.00,
                 R.drawable.newb350front,
                 R.drawable.newb350back,
-                R.drawable.newb350suela
+                R.drawable.newb350suela,
+                false
             ),
             ShoeModel(
                 "NEW BALANCE 327",
@@ -90,7 +98,8 @@ object AllShoesObject {
                 110.00,
                 R.drawable.newb327front,
                 R.drawable.newb327back,
-                R.drawable.newb327suela
+                R.drawable.newb327suela,
+                false
             ),
             ShoeModel(
                 "NEW BALANCE 550",
@@ -99,7 +108,8 @@ object AllShoesObject {
                 150.00,
                 R.drawable.newbalancefront,
                 R.drawable.newbba,
-                R.drawable.newbalancesuela
+                R.drawable.newbalancesuela,
+                false
             ),
             ShoeModel(
                 "NEW BALANCE BB550",
@@ -108,7 +118,8 @@ object AllShoesObject {
                 130.00,
                 R.drawable.newbb550front,
                 R.drawable.newbb550back,
-                R.drawable.newbb550suela
+                R.drawable.newbb550suela,
+                false
             ),
             ShoeModel(
                 "Stan Smith",
@@ -117,7 +128,8 @@ object AllShoesObject {
                 150.00,
                 R.drawable.stansmithfront,
                 R.drawable.stansmith,
-                R.drawable.stansmithsuela
+                R.drawable.stansmithsuela,
+                false
             ),
 
             ShoeModel(
@@ -127,7 +139,8 @@ object AllShoesObject {
                 110.00,
                 R.drawable.superstarfront,
                 R.drawable.superstarback,
-                R.drawable.superstarback
+                R.drawable.superstarback,
+                false
             ),
 
             ShoeModel(
@@ -137,7 +150,8 @@ object AllShoesObject {
                 120.00,
                 R.drawable.forummidfront,
                 R.drawable.forummidadidas,
-                R.drawable.forumlowsuela
+                R.drawable.forumlowsuela,
+                false
             ),
 
             ShoeModel(
@@ -147,7 +161,8 @@ object AllShoesObject {
                 120.00,
                 R.drawable.forummidfront,
                 R.drawable.forumlow,
-                R.drawable.forumlowsuela
+                R.drawable.forumlowsuela,
+                false
             ),
 
             ShoeModel(
@@ -157,7 +172,8 @@ object AllShoesObject {
                 100.00,
                 R.drawable.zapatillagazellefront,
                 R.drawable.zapatillagazelle,
-                R.drawable.zapatillagazellesuela
+                R.drawable.zapatillagazellesuela,
+                false
             ),
             ShoeModel(
                 "ADIDAS GAZELLE",
@@ -166,7 +182,8 @@ object AllShoesObject {
                 100.00,
                 R.drawable.zapatillagazellefront,
                 R.drawable.zapatillagazelle,
-                R.drawable.zapatillagazellesuela
+                R.drawable.zapatillagazellesuela,
+                false
             ),
             ShoeModel(
                 "PUMA TUMBLE",
@@ -175,7 +192,8 @@ object AllShoesObject {
                 70.00,
                 R.drawable.frontsidecatumble,
                 R.drawable.tumbleback,
-                R.drawable.suelatumble
+                R.drawable.suelatumble,
+                false
             ),
             ShoeModel(
                 "Smash v2 Trainers",
@@ -184,7 +202,8 @@ object AllShoesObject {
                 54.94,
                 R.drawable.smashfront,
                 R.drawable.smashback,
-                R.drawable.smashsuela
+                R.drawable.smashsuela,
+                false
             ),
             ShoeModel(
                 "Mirage Sneakers",
@@ -193,7 +212,8 @@ object AllShoesObject {
                 59.94,
                 R.drawable.miragefront,
                 R.drawable.mirageback,
-                R.drawable.miragesuela
+                R.drawable.miragesuela,
+                false
             )
 
 

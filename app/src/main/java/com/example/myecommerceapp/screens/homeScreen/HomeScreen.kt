@@ -1,7 +1,5 @@
 package com.example.myecommerceapp.screens.homeScreen
 
-import android.content.ContentValues
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -20,38 +18,33 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.example.myecommerceapp.R
-import com.example.myecommerceapp.ViewModel.FirebaseViewModel
-import com.example.myecommerceapp.navigation.BottomBarNavGraph
 import com.example.myecommerceapp.navigation.BottomBarScreen
 import com.example.myecommerceapp.navigation.EcommerceDestinations
-import com.example.myecommerceapp.screens.homeScreen.model.categories.CategoriesModel
-import com.example.myecommerceapp.screens.homeScreen.model.categories.CategoriesObject
-import com.example.myecommerceapp.screens.homeScreen.model.ShoeModel
-import com.example.myecommerceapp.screens.homeScreen.model.ShoeObject
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
+import com.example.myecommerceapp.model.categories.CategoriesModel
+import com.example.myecommerceapp.model.categories.CategoriesObject
+import com.example.myecommerceapp.model.ShoeModel
+import com.example.myecommerceapp.model.ShoeObject
+import com.example.myecommerceapp.viewmodel.FirebaseFirestoreVM
 
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier , navController: NavController,viewModel: FirebaseViewModel = hiltViewModel()){
+fun HomeScreen(modifier: Modifier = Modifier , navController: NavController){
     val shoeList = ShoeObject.getShoes()
         LazyColumn(
             modifier = modifier
@@ -234,15 +227,7 @@ fun Features(text: String){
 
 @Composable
 fun ShoeItem(shoe : ShoeModel,navController: NavController) {
-    val obj = ShoeModel(
-        shoe.shoeName,
-        shoe.shoeImage,
-        shoe.shoeDescription,
-        shoe.shoePrice,
-        shoe.shoeFrontSide,
-        shoe.shoeBackSide,
-        shoe.shoeSide
-    )
+
     Column(
         modifier = Modifier,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -274,32 +259,7 @@ fun ShoeItem(shoe : ShoeModel,navController: NavController) {
                     contentScale = ContentScale.Crop
                 )
             }
-            var isFavorite by remember { mutableStateOf(false) }
-
-            IconToggleButton(
-                checked = isFavorite,
-                onCheckedChange = {
-                    isFavorite = !isFavorite
-                }
-            ) {
-                Icon(
-                    imageVector = if (isFavorite) {
-                        Icons.Filled.Favorite
-                    } else {
-                        Icons.Filled.FavoriteBorder
-                    }, contentDescription = null, tint = MaterialTheme.colors.primary
-                )
-            }
-
-            val db = FirebaseFirestore.getInstance()
-
-            if (isFavorite) {
-                db.collection("shoes").document(shoe.shoeName).set(obj)
-            }
-            else{
-                db.collection("shoes").document(shoe.shoeName)
-                    .delete()
-            }
+            FavoriteButton(shoe = shoe)
 
         }
 
@@ -310,46 +270,34 @@ fun ShoeItem(shoe : ShoeModel,navController: NavController) {
 }
 
 @Composable
-fun FavoriteButton(color: Color = MaterialTheme.colors.primary,shoeData : ShoeModel){
-    var isFavorite by remember{ mutableStateOf(false)}
-    val obj = ShoeModel(
-        shoeData.shoeName,
-        shoeData.shoeImage,
-        shoeData.shoeDescription,
-        shoeData.shoePrice,
-        shoeData.shoeFrontSide,
-        shoeData.shoeBackSide,
-        shoeData.shoeSide
-    )
+fun FavoriteButton(shoe : ShoeModel){
+
+
+    val myviewModel : FirebaseFirestoreVM =
+        viewModel(LocalContext.current as ViewModelStoreOwner, key = shoe.shoeName)
+
+
     
+
     IconToggleButton(
-        checked = isFavorite,
-        onCheckedChange ={
-                isFavorite = !isFavorite
-    }
-    ) {
-        Icon(imageVector = if (isFavorite){Icons.Filled.Favorite} else{Icons.Filled.FavoriteBorder} , contentDescription = null, tint = color )
-    }
-
-     val db = FirebaseFirestore.getInstance()
-
-    if(isFavorite){
-        if(Firebase.auth.currentUser?.email != null){
-            db.collection("shoes").add(obj).addOnSuccessListener {
-                    documentReference ->
-                Log.d(ContentValues.TAG, "DocumentSnapshot written with ID: ${documentReference.id}")
-            }
-                .addOnFailureListener { e ->
-                    Log.w(ContentValues.TAG, "Error adding document", e)
-                }
-
-            }
+        checked = shoe.isFavorite,
+        onCheckedChange = {
+           shoe.isFavorite= !shoe.isFavorite
         }
+    ) {
+        Icon(
+            imageVector = if (shoe.isFavorite ) {
+                Icons.Filled.Favorite
+            } else {
+                Icons.Filled.FavoriteBorder
+            }, contentDescription = null, tint = MaterialTheme.colors.primary
+        )
     }
-
-@Composable
-fun AddToFavorite(){
+    if (shoe.isFavorite) {
+        myviewModel.addToDatabase(shoe)
+    }
 }
+
 
 /*@Composable
 fun ShoeRow(navController: NavController){

@@ -15,18 +15,15 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.myecommerceapp.ViewModel.FirebaseViewModel
+import com.example.myecommerceapp.viewmodel.FirebaseViewModel
 import com.example.myecommerceapp.ViewModel.Resource
 import com.example.myecommerceapp.navigation.EcommerceDestinations
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(modifier: Modifier = Modifier,navController: NavController){
-    val user = Firebase.auth.currentUser
     Scaffold(topBar = { Appbar() }) {
         Column(modifier = modifier
             .fillMaxSize()

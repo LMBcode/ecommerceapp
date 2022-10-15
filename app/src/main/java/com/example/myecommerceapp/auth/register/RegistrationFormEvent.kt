@@ -1,4 +1,4 @@
-package com.example.myecommerceapp.register
+package com.example.myecommerceapp.auth.register
 
 sealed class RegistrationFormEvent{
         data class EmailChanged(val email: String) : RegistrationFormEvent()

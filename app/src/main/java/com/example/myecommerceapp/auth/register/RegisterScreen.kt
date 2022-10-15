@@ -1,4 +1,4 @@
-package com.example.myecommerceapp.register
+package com.example.myecommerceapp.auth.register
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -14,7 +14,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.myecommerceapp.ViewModel.FirebaseViewModel
+import com.example.myecommerceapp.viewmodel.FirebaseViewModel
 import com.example.myecommerceapp.ViewModel.Resource
 import com.example.myecommerceapp.navigation.EcommerceDestinations
 import com.example.myecommerceapp.ui.Appbar
