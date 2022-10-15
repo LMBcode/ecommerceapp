@@ -44,34 +44,34 @@ import com.example.myecommerceapp.viewmodel.FirebaseFirestoreVM
 
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier , navController: NavController){
+fun HomeScreen(modifier: Modifier = Modifier , navController: NavController) {
     val shoeList = ShoeObject.getShoes()
-        LazyColumn(
-            modifier = modifier
-                .fillMaxSize()
-        )
-        {
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize()
+    )
+    {
 
-            item { SearchBar(modifier = modifier.padding(16.dp, vertical = 8.dp)) }
+        item { SearchBar(modifier = modifier.padding(16.dp, vertical = 8.dp)) }
 
-            item { Banner() }
+        item { Banner() }
 
-            item { CategoriesList(navController) }
+        item { CategoriesList(navController) }
 
-            item { Features(text = "TOP SHOES") }
+        item { Features(text = "TOP SHOES") }
 
-            //item { ShoeRow(navController = navController) }
+        //item { ShoeRow(navController = navController) }
 
-            gridItems(
-                data = shoeList,
-                columnCount = 2,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = modifier.padding(horizontal = 16.dp)
-            ) { itemData ->
-                ShoeItem(shoe = itemData, navController)
-            }
+        gridItems(
+            data = shoeList,
+            columnCount = 2,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = modifier.padding(horizontal = 16.dp)
+        ) { itemData ->
+            ShoeItem(shoe = itemData, navController)
         }
-    
+    }
+
 }
 
 @Composable
@@ -139,21 +139,21 @@ fun Header(modifier: Modifier = Modifier,text : String ){
 @Composable
 fun SearchBar(modifier: Modifier = Modifier){
     OutlinedTextField(
-            value = "",
-            onValueChange = {},
-            modifier = modifier
-                .heightIn(56.dp)
-                .fillMaxWidth(),
-            label = { Text(text = "What are you looking for?", color = Color.Gray) },
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = null,
-                    tint = Color.Black
-                )
-            },
-            colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.background),
-            shape = RoundedCornerShape(16.dp)
+        value = "",
+        onValueChange = {},
+        modifier = modifier
+            .heightIn(56.dp)
+            .fillMaxWidth(),
+        label = { Text(text = "What are you looking for?", color = Color.Gray) },
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.Search,
+                contentDescription = null,
+                tint = Color.Black
+            )
+        },
+        colors = TextFieldDefaults.textFieldColors(backgroundColor = MaterialTheme.colors.background),
+        shape = RoundedCornerShape(16.dp)
     )
 }
 
@@ -202,12 +202,12 @@ fun Categories(categories: CategoriesModel, navController: NavController){
             Icon(painter = painterResource(id = categories.imgae), contentDescription = null)
         }
 
-            Text(
-                text = categories.name, color = MaterialTheme.colors.primary,
-                modifier = Modifier
-                    .padding(start = 16.dp, top = 8.dp),
-                fontSize = 10.sp, textAlign = TextAlign.Center
-            )
+        Text(
+            text = categories.name, color = MaterialTheme.colors.primary,
+            modifier = Modifier
+                .padding(start = 16.dp, top = 8.dp),
+            fontSize = 10.sp, textAlign = TextAlign.Center
+        )
     }
 
 }
@@ -221,7 +221,7 @@ fun Features(text: String){
             color = MaterialTheme.colors.primary,
             modifier = Modifier.
             weight(1f),
-        style = MaterialTheme.typography.subtitle1, fontSize = 18.sp)
+            style = MaterialTheme.typography.subtitle1, fontSize = 18.sp)
     }
 }
 
@@ -263,26 +263,26 @@ fun ShoeItem(shoe : ShoeModel,navController: NavController) {
 
         }
 
-      Text(text = shoe.shoeName,color = MaterialTheme.colors.primary, style = MaterialTheme.typography.caption, modifier = Modifier.paddingFromBaseline(12.dp,12.dp))
+        Text(text = shoe.shoeName,color = MaterialTheme.colors.primary, style = MaterialTheme.typography.caption, modifier = Modifier.paddingFromBaseline(12.dp,12.dp))
 
-      Text(text = shoe.shoePrice.toString() + "€",color = MaterialTheme.colors.primary,modifier = Modifier.paddingFromBaseline(12.dp,8.dp))
+        Text(text = shoe.shoePrice.toString() + "€",color = MaterialTheme.colors.primary,modifier = Modifier.paddingFromBaseline(12.dp,8.dp))
     }
 }
 
 @Composable
-fun FavoriteButton(shoe : ShoeModel){
+fun FavoriteButton(shoe : ShoeModel) {
 
 
     val myviewModel : FirebaseFirestoreVM =
         viewModel(LocalContext.current as ViewModelStoreOwner, key = shoe.shoeName)
 
 
-    
+
 
     IconToggleButton(
         checked = shoe.isFavorite,
         onCheckedChange = {
-           shoe.isFavorite= !shoe.isFavorite
+            shoe.isFavorite= !shoe.isFavorite
         }
     ) {
         Icon(
@@ -305,7 +305,7 @@ fun ShoeRow(navController: NavController){
     LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp),modifier = Modifier.padding(top = 8.dp, start = 16.dp)){
         items(shoeList){shoe ->
             ShoeItem(shoe = shoe, navController = navController )
-            
+
         }
     }
 }*/
