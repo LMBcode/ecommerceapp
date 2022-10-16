@@ -1,6 +1,4 @@
-package com.example.myecommerceapp.usecase
-
-import android.util.Patterns
+package com.example.myecommerceapp.firebase.auth.usecase
 
 class ValidatePassword {
     fun execute(password : String) :ValidationResult{

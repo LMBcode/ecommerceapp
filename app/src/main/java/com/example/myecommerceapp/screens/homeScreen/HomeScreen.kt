@@ -1,5 +1,7 @@
 package com.example.myecommerceapp.screens.homeScreen
 
+import android.content.ContentValues
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -34,18 +36,22 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.myecommerceapp.R
-import com.example.myecommerceapp.navigation.BottomBarScreen
-import com.example.myecommerceapp.navigation.EcommerceDestinations
+import com.example.myecommerceapp.model.ShoeModel
+import com.example.myecommerceapp.model.ShoeProvider
 import com.example.myecommerceapp.model.categories.CategoriesModel
 import com.example.myecommerceapp.model.categories.CategoriesObject
-import com.example.myecommerceapp.model.ShoeModel
-import com.example.myecommerceapp.model.ShoeObject
+import com.example.myecommerceapp.viewmodel.FirebaseViewModel
+import com.example.myecommerceapp.navigation.BottomBarScreen
+import com.example.myecommerceapp.navigation.EcommerceDestinations
 import com.example.myecommerceapp.viewmodel.FirebaseFirestoreVM
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier , navController: NavController){
-    val shoeList = ShoeObject.getShoes()
+    val shoeList = ShoeProvider.getShoes()
         LazyColumn(
             modifier = modifier
                 .fillMaxSize()
@@ -226,7 +232,7 @@ fun Features(text: String){
 }
 
 @Composable
-fun ShoeItem(shoe : ShoeModel,navController: NavController) {
+fun ShoeItem(shoe : ShoeModel, navController: NavController, viewModel: FirebaseFirestoreVM = hiltViewModel()) {
 
     Column(
         modifier = Modifier,
@@ -239,31 +245,33 @@ fun ShoeItem(shoe : ShoeModel,navController: NavController) {
                 elevation = 8.dp,
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Image(
-                    painter = painterResource(id = shoe.shoeImage),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            navController.navigate(
-                                EcommerceDestinations.DetailScreen.passNameAndImage(
-                                    shoe.shoeName,
-                                    shoe.shoeImage,
-                                    shoe.shoePrice.toString(),
-                                    shoe.shoeFrontSide,
-                                    shoe.shoeBackSide,
-                                    shoe.shoeSide
+                shoe.shoeImage?.let { painterResource(id = it) }?.let {
+                    Image(
+                        painter = it,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                navController.navigate(
+                                    EcommerceDestinations.DetailScreen.passNameAndImage(
+                                        shoe.shoeName,
+                                        shoe.shoeImage,
+                                        shoe.shoePrice.toString(),
+                                        shoe.shoeFrontSide,
+                                        shoe.shoeBackSide,
+                                        shoe.shoeSide
+                                    )
                                 )
-                            )
-                        },
-                    contentScale = ContentScale.Crop
-                )
+                            },
+                        contentScale = ContentScale.Crop
+                    )
+                }
             }
             FavoriteButton(shoe = shoe)
 
         }
 
-      Text(text = shoe.shoeName,color = MaterialTheme.colors.primary, style = MaterialTheme.typography.caption, modifier = Modifier.paddingFromBaseline(12.dp,12.dp))
+        shoe.shoeName?.let { Text(text = it,color = MaterialTheme.colors.primary, style = MaterialTheme.typography.caption, modifier = Modifier.paddingFromBaseline(12.dp,12.dp)) }
 
       Text(text = shoe.shoePrice.toString() + "€",color = MaterialTheme.colors.primary,modifier = Modifier.paddingFromBaseline(12.dp,8.dp))
     }
@@ -272,36 +280,44 @@ fun ShoeItem(shoe : ShoeModel,navController: NavController) {
 @Composable
 fun FavoriteButton(shoe : ShoeModel){
 
-
     val myviewModel : FirebaseFirestoreVM =
         viewModel(LocalContext.current as ViewModelStoreOwner, key = shoe.shoeName)
 
 
-    
+    val isFavorite = myviewModel.isFavorite
 
     IconToggleButton(
-        checked = shoe.isFavorite,
+        checked = isFavorite.value ,
         onCheckedChange = {
-           shoe.isFavorite= !shoe.isFavorite
+            isFavorite.value = !isFavorite.value
         }
     ) {
         Icon(
-            imageVector = if (shoe.isFavorite ) {
+            imageVector = if (isFavorite.value) {
                 Icons.Filled.Favorite
             } else {
                 Icons.Filled.FavoriteBorder
             }, contentDescription = null, tint = MaterialTheme.colors.primary
         )
     }
-    if (shoe.isFavorite) {
+
+
+    if (isFavorite.value) {
         myviewModel.addToDatabase(shoe)
     }
-}
+    else{
+        myviewModel.deleteFromDatabase(shoe)
+    }
 
+    }
+
+@Composable
+fun AddToFavorite(){
+}
 
 /*@Composable
 fun ShoeRow(navController: NavController){
-    val shoeList = ShoeObject.getShoes()
+    val shoeList = ShoeProvider.getShoes()
     LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp),modifier = Modifier.padding(top = 8.dp, start = 16.dp)){
         items(shoeList){shoe ->
             ShoeItem(shoe = shoe, navController = navController )

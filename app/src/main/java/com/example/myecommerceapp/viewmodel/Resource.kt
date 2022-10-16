@@ -1,5 +1,7 @@
 package com.example.myecommerceapp.ViewModel
 
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 import java.lang.Exception
 
 sealed class Resource<out T>
@@ -12,3 +14,4 @@ sealed class Resource<out T>
     class Unspecified<T> : Resource<T>()
 
 }
+

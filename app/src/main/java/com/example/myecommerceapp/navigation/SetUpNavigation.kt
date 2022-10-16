@@ -9,7 +9,7 @@ import androidx.navigation.navArgument
 import com.example.myecommerceapp.navigation.*
 import com.example.myecommerceapp.screens.detailscreen.ShoeDetailScreen
 import com.example.myecommerceapp.screens.homeScreen.HomeScreen
-import com.example.myecommerceapp.auth.register.RegisterScreen
+import com.example.myecommerceapp.firebase.auth.register.RegisterScreen
 import com.example.myecommerceapp.screens.favoritescreen.FavoriteScreen
 import com.example.myecommerceapp.screens.profilescreen.ProfileScreen
 
@@ -55,7 +55,7 @@ fun SetUpNavigation(navController: NavHostController){
             ProfileScreen()
         }
         composable(BottomBarScreen.Favorite.route){
-            FavoriteScreen()
+            FavoriteScreen(navController = navController)
         }
 
     }

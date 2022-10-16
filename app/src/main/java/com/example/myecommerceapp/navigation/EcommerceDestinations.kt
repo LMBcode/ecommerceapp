@@ -12,7 +12,7 @@ const val SHOE_SIDE = "shoeSide"
 sealed class EcommerceDestinations(val route : String){
     object LoginScreen : EcommerceDestinations("login_screen")
     object DetailScreen : EcommerceDestinations("detail_screen/{$SHOE_NAME}/{$SHOE_IMAGE}/{$SHOE_PRICE}/{$SHOE_FRONT}/{$SHOE_BACK}/{$SHOE_SIDE}")
-    fun passNameAndImage(name : String , image : Int,price:String,shoeFrontSide:Int,shoeBackSide :Int,shoeSide:Int) : String{
+    fun passNameAndImage(name : String? , image : Int?,price:String?,shoeFrontSide:Int?,shoeBackSide :Int?,shoeSide:Int?) : String{
         return "detail_screen/$name/$image/$price/$shoeFrontSide/$shoeBackSide/$shoeSide"
     }
     object HomeScreen : EcommerceDestinations("home_screen")

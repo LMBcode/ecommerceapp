@@ -1,4 +1,4 @@
-package com.example.myecommerceapp.auth.register
+package com.example.myecommerceapp.firebase.auth.register
 
 import android.annotation.SuppressLint
 import android.util.Log

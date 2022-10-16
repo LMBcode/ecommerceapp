@@ -1,4 +1,4 @@
-package com.example.myecommerceapp.usecase
+package com.example.myecommerceapp.firebase.auth.usecase
 
 data class ValidationResult(
     val successful : Boolean,

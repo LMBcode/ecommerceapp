@@ -21,7 +21,7 @@ fun BottomBarNavGraph(navController: NavHostController){
            ProfileScreen()
         }
         composable(BottomBarScreen.Favorite.route){
-            FavoriteScreen()
+            FavoriteScreen(navController = navController)
         }
     }
 

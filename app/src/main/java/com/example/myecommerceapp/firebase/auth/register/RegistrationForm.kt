@@ -1,4 +1,4 @@
-package com.example.myecommerceapp.auth.register
+package com.example.myecommerceapp.firebase.auth.register
 
 data class RegistrationForm(
     val email : String = "",

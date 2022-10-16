@@ -3,7 +3,7 @@ package com.example.myecommerceapp.model
 import com.example.myecommerceapp.R
 
 
-object ShoeObject {
+object ShoeProvider {
         fun getShoes() : List<ShoeModel> {
             return listOf(
                 ShoeModel(

@@ -1,4 +1,4 @@
-package com.example.myecommerceapp.auth.register
+package com.example.myecommerceapp.firebase.auth.register
 
 sealed class RegistrationFormEvent{
         data class EmailChanged(val email: String) : RegistrationFormEvent()
