@@ -1,5 +1,6 @@
 package com.example.myecommerceapp.screens.detailscreen
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,13 +17,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.myecommerceapp.domain.model.CartItem
+import com.example.myecommerceapp.domain.model.CartProvider
+import com.example.myecommerceapp.domain.model.ShoeProvider
+import com.example.myecommerceapp.navigation.BottomBarScreen
+import com.example.myecommerceapp.navigation.EcommerceDestinations
+import com.example.myecommerceapp.presentation.viewmodel.CalculateViewModel
+import com.example.myecommerceapp.presentation.viewmodel.CartViewModel
 
 
 @Composable
-fun ShoeDetailScreen(navController: NavController,name : String ?=null , image : Int?,price : String?,frontSide: Int?,backside : Int?,shoeside : Int?){
+fun ShoeDetailScreen(
+    navController: NavController,
+    id : Int?,
+    name: String? = null,
+    image: Int?,
+    price: String?,
+    frontSide: Int?,
+    backside: Int?,
+    shoeside: Int?,
+    brand: String?
+) {
     Column {
         Card(
             modifier = Modifier
@@ -32,13 +54,15 @@ fun ShoeDetailScreen(navController: NavController,name : String ?=null , image :
             elevation = 8.dp
         ) {
             image?.let { painterResource(id = it) }
-                ?.let { Image(
-                    painter = it,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                ) }
+                ?.let {
+                    Image(
+                        painter = it,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                }
         }
         Row {
             Text(
@@ -51,7 +75,7 @@ fun ShoeDetailScreen(navController: NavController,name : String ?=null , image :
                     )
                     .weight(1f)
             )
-            
+
             Text(
                 text = "$price €",
                 color = MaterialTheme.colors.primary,
@@ -60,19 +84,25 @@ fun ShoeDetailScreen(navController: NavController,name : String ?=null , image :
                     .padding(top = 16.dp)
             )
         }
-        
+
 
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
             Card(
                 modifier = Modifier
                     .size(90.dp)
-                    .padding(top=8.dp,start = 16.dp),
+                    .padding(top = 8.dp, start = 16.dp),
                 shape = RoundedCornerShape(16.dp),
                 elevation = 8.dp
             ) {
                 image?.let { painterResource(id = it) }
-                    ?.let { Image(painter = it, contentDescription = null, contentScale = ContentScale.Crop ) }
+                    ?.let {
+                        Image(
+                            painter = it,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop
+                        )
+                    }
             }
 
             Card(
@@ -83,7 +113,13 @@ fun ShoeDetailScreen(navController: NavController,name : String ?=null , image :
                 elevation = 8.dp
             ) {
                 frontSide?.let { painterResource(id = it) }
-                    ?.let { Image(painter = it, contentDescription = null, contentScale = ContentScale.Crop ) }
+                    ?.let {
+                        Image(
+                            painter = it,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop
+                        )
+                    }
             }
 
             Card(
@@ -94,7 +130,13 @@ fun ShoeDetailScreen(navController: NavController,name : String ?=null , image :
                 elevation = 8.dp
             ) {
                 backside?.let { painterResource(id = it) }
-                    ?.let { Image(painter = it, contentDescription = null, contentScale = ContentScale.Crop ) }
+                    ?.let {
+                        Image(
+                            painter = it,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop
+                        )
+                    }
             }
 
             Card(
@@ -106,26 +148,41 @@ fun ShoeDetailScreen(navController: NavController,name : String ?=null , image :
                 elevation = 8.dp
             ) {
                 shoeside?.let { painterResource(id = it) }
-                    ?.let { Image(painter = it, contentDescription = null, contentScale = ContentScale.Crop ) }
+                    ?.let {
+                        Image(
+                            painter = it,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop
+                        )
+                    }
             }
         }
         Sizes()
         SizeNumber()
-        AddToCart()
+        BuyItem(
+            name = name,
+            image = image,
+            price = price,
+            brand= brand,
+            navController = navController,
+            id = id
+        )
 
     }
 }
 
 
-
 @Composable
-fun Sizes(){
+fun Sizes() {
     Column(modifier = Modifier) {
-        Row(modifier = Modifier
-            .padding(top = 16.dp, start = 8.dp)
+        Row(
+            modifier = Modifier
+                .padding(top = 16.dp, start = 8.dp)
         ) {
-            Text(text = "Size", style = MaterialTheme.typography.subtitle1,
-                modifier = Modifier.weight(1f))
+            Text(
+                text = "Size", style = MaterialTheme.typography.subtitle1,
+                modifier = Modifier.weight(1f)
+            )
 
             Text(text = "Size Guide")
         }
@@ -133,21 +190,24 @@ fun Sizes(){
 }
 
 @Composable
-fun SizeNumber(){
-    val size = mutableListOf("35","36","37","38","39","40","41","42","43","44")
-    LazyRow(modifier = Modifier
-        .padding(start= 16.dp, end = 8.dp)
-        .fillMaxWidth(),
-    horizontalArrangement = Arrangement.SpaceEvenly){
+fun SizeNumber() {
+    val size = mutableListOf("35", "36", "37", "38", "39", "40", "41", "42", "43", "44")
+    LazyRow(
+        modifier = Modifier
+            .padding(start = 16.dp, end = 8.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
 
-        items(size){ size ->
-            Box(modifier = Modifier
-                .border(1.dp, Color.Black, RoundedCornerShape(16.dp))
-                .size(60.dp)
-                .fillMaxHeight()
-            ){
-                Text(text = size
-                , modifier = Modifier
+        items(size) { size ->
+            Box(
+                modifier = Modifier
+                    .border(1.dp, Color.Black, RoundedCornerShape(16.dp))
+                    .size(60.dp)
+                    .fillMaxHeight()
+            ) {
+                Text(
+                    text = size, modifier = Modifier
                         .padding(start = 20.dp, top = 20.dp)
                         .size(50.dp)
                 )
@@ -157,19 +217,29 @@ fun SizeNumber(){
 }
 
 @Composable
-fun AddToCart(){
-    Button(onClick = { /*TODO*/ },
-    modifier = Modifier
-        .padding(16.dp)
-        .clip(CircleShape)
-        .background(MaterialTheme.colors.primary)
-        .fillMaxWidth(),
-    ) {
-        Row(horizontalArrangement = Arrangement.Center,
+fun BuyItem(id : Int?,name: String?, image: Int?, price: String?, brand : String?,navController: NavController, viewModel : CartViewModel = hiltViewModel()) {
+   val item = CartItem(id=id,name = name, image = image, price = price, brand = brand, quantity = 1, totalPrice = 0)
+    Button(
+        onClick = {
+            navController.navigate(
+                BottomBarScreen.ShoppingCart.route
+            )
+
+            viewModel.addItem(item)
+        },
         modifier = Modifier
-            .padding(start = 8.dp)) {
+            .padding(16.dp)
+            .clip(CircleShape)
+            .background(MaterialTheme.colors.primary)
+            .fillMaxWidth(),
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier
+                .padding(start = 8.dp)
+        ) {
             Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = null)
-            Text(text = "ADD TO CART")
+            Text(text = "BUY NOW")
         }
     }
 

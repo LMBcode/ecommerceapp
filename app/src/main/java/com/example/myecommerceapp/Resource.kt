@@ -1,4 +1,4 @@
-package com.example.myecommerceapp.ViewModel
+package com.example.myecommerceapp
 
 import java.lang.Exception
 
@@ -12,3 +12,4 @@ sealed class Resource<out T>
     class Unspecified<T> : Resource<T>()
 
 }
+

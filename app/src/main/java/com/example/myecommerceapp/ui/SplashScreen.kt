@@ -30,7 +30,7 @@ fun SplashScreen(navController: NavController){
         modifier = Modifier
             .fillMaxSize()
     ){
-        val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.abv))
+        val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.lf30_editor_vmnejmul))
         val logoAnimationState =
             animateLottieCompositionAsState(composition = composition)
         LottieAnimation(

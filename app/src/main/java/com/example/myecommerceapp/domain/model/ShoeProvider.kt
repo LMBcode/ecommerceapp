@@ -1,66 +1,72 @@
-package com.example.myecommerceapp.model
+package com.example.myecommerceapp.domain.model
 
 import com.example.myecommerceapp.R
 
 
 object ShoeProvider {
-        fun getShoes() : List<ShoeModel> {
+        fun getShoes() : List<Shoe> {
             return listOf(
-                ShoeModel(
+                Shoe(
+                    1,
                     "NIKE AIR FORCE 1 WHITE",
                     R.drawable.whiteaf1,
-                    "",
-                    119.99,
+                    "NIKE",
+                    "119.99",
                     R.drawable.af1frontside,
                     R.drawable.backviewaf1,
                     R.drawable.suelaaf1,
                     false
                 ),
-                ShoeModel(
+                Shoe(
+                    2,
                     "ADIDAS FORUM MID",
                     R.drawable.forummidadidas,
-                    "",
-                    120.00,
+                    "ADIDAS",
+                    "120.99",
                     R.drawable.forummidfront,
                     R.drawable.forummidadidas,
                     R.drawable.forumlowsuela,
                     false
                 ),
-                ShoeModel(
+                Shoe(
+                    3,
                     "Smash v2 Trainers",
                     R.drawable.smash_v2,
-                    "",
-                    54.94,
+                    "PUMA",
+                    "54.94",
                     R.drawable.smashfront,
                     R.drawable.smashback,
                     R.drawable.smashsuela,
                     false
                 ),
-                ShoeModel(
+                Shoe(
+                    4,
                     "AIR JORDAN 1 RETRO",
                     R.drawable.aj1retro,
-                    "",
-                    169.99,
+                    "NIKE",
+                    "169.99",
                     R.drawable.aj1front,
                     R.drawable.aj1back,
                     R.drawable.aj1suela,
                     false
                 ),
-                ShoeModel(
+                Shoe(
+                    5,
                     "NEW BALANCE 550",
                     R.drawable.newbalance,
-                    "",
-                    150.00,
+                    "NEW BALANCE",
+                    "150.99",
                     R.drawable.newbalancefront,
                     R.drawable.newbba,
                     R.drawable.newbalancesuela,
                     false
                 ),
-                ShoeModel(
+                Shoe(
+                    6,
                     "Stan Smith",
                     R.drawable.stansmith,
-                    "",
-                    150.00,
+                    "ADIDAS",
+                    "150.99",
                     R.drawable.stansmithfront,
                     R.drawable.stansmith,
                     R.drawable.stansmithsuela,

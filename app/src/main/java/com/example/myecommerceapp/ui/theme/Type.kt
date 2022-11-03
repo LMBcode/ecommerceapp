@@ -7,6 +7,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.W700
 import androidx.compose.ui.text.font.FontWeight.Companion.W900
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myecommerceapp.R
 
@@ -45,6 +46,21 @@ val Typography = Typography(
         fontFamily = BebasNeue,
         fontWeight = FontWeight.W500,
         fontSize = 24.sp
+    ),
+    h3 = TextStyle(
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp
+    ),
+    h4 = TextStyle(
+        fontFamily = Montserrat,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp
+    ),
+    body2 = TextStyle(
+        fontFamily = BebasNeue,
+        fontWeight = FontWeight.W500,
+        fontSize = 30.sp
     )
 /*
 caption = TextStyle(

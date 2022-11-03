@@ -1,4 +1,4 @@
-package com.example.myecommerceapp.model.categories
+package com.example.myecommerceapp.domain.model.categories
 
 class CategoriesModel(
     val name : String,
