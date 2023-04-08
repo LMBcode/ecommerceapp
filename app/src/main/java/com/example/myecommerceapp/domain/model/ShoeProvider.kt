@@ -72,6 +72,6 @@ object ShoeProvider {
                     R.drawable.stansmithsuela,
                     false
                 )
-            )
+            ).take(8)
         }
     }

@@ -62,7 +62,7 @@ fun HomeScreen(
         item { Features(text = "SHOP") }
 
             gridItems(
-                data = shoeList.take(6).toList(),
+                data = shoeList,
                 columnCount = 2,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = modifier.padding(horizontal = 16.dp)
@@ -138,16 +138,16 @@ fun Banner(modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(15.dp)
+            .padding(8.dp)
             .size(200.dp),
         elevation = 15.dp,
         shape = RoundedCornerShape(6.dp)
     ) {
 
         Image(
-            painter = painterResource(id = R.drawable.nike_banner),
+            painter = painterResource(id = R.drawable.banner1),
             contentDescription = null,
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.FillBounds
         )
     }
 }
@@ -156,7 +156,7 @@ fun Banner(modifier: Modifier = Modifier) {
 fun CategoriesList(navController: NavController) {
     val categoriesList = CategoriesObject.getCategories()
     LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(40.dp),
         modifier = Modifier.padding(bottom = 16.dp)
     ) {
         items(categoriesList) { categorie ->

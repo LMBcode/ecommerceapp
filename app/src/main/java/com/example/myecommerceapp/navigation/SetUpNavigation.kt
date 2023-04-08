@@ -66,7 +66,7 @@ fun SetUpNavigation(navController: NavHostController){
             )
         }
 
-        composable(route = BottomBarScreen.ShoppingCart.route){ ShoppingCart()}
+        composable(route = BottomBarScreen.ShoppingCart.route){ ShoppingCart(navController = navController)}
         
         composable(route = BottomBarScreen.Home.route){ HomeScreen(navController = navController)}
         

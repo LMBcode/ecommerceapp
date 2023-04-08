@@ -1,18 +1,19 @@
 package com.example.myecommerceapp.screens.detailscreen
 
-import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -21,15 +22,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.myecommerceapp.domain.model.CartItem
-import com.example.myecommerceapp.domain.model.CartProvider
-import com.example.myecommerceapp.domain.model.ShoeProvider
 import com.example.myecommerceapp.navigation.BottomBarScreen
-import com.example.myecommerceapp.navigation.EcommerceDestinations
-import com.example.myecommerceapp.presentation.viewmodel.CalculateViewModel
 import com.example.myecommerceapp.presentation.viewmodel.CartViewModel
 
 
@@ -45,6 +40,7 @@ fun ShoeDetailScreen(
     shoeside: Int?,
     brand: String?
 ) {
+    val size = mutableListOf(35, 36, 37, 38, 39, 40, 41, 42, 43, 44)
     Column {
         Card(
             modifier = Modifier
@@ -158,7 +154,6 @@ fun ShoeDetailScreen(
             }
         }
         Sizes()
-        SizeNumber()
         BuyItem(
             name = name,
             image = image,
@@ -190,8 +185,11 @@ fun Sizes() {
 }
 
 @Composable
-fun SizeNumber() {
-    val size = mutableListOf("35", "36", "37", "38", "39", "40", "41", "42", "43", "44")
+fun SizeNumber(size : MutableList<Int> = mutableListOf(),shoeSize : MutableState<Int>) {
+    var isSelected = remember { mutableStateOf(false) }
+    var selectedIndex by remember {
+        mutableStateOf(-1)
+    }
     LazyRow(
         modifier = Modifier
             .padding(start = 16.dp, end = 8.dp)
@@ -204,10 +202,22 @@ fun SizeNumber() {
                 modifier = Modifier
                     .border(1.dp, Color.Black, RoundedCornerShape(16.dp))
                     .size(60.dp)
+                    .clip(RoundedCornerShape(16.dp))
                     .fillMaxHeight()
+                    .selectable(
+                        selected = selectedIndex == size,
+                        onClick = {
+                            selectedIndex = if (selectedIndex == size) -1 else size
+                            shoeSize.value = size
+
+                        })
+                    .background(
+                        if (selectedIndex == size) Color.Black
+                        else Color.DarkGray
+                    )
             ) {
                 Text(
-                    text = size, modifier = Modifier
+                    text = size.toString(), modifier = Modifier
                         .padding(start = 20.dp, top = 20.dp)
                         .size(50.dp)
                 )
@@ -217,29 +227,49 @@ fun SizeNumber() {
 }
 
 @Composable
-fun BuyItem(id : Int?,name: String?, image: Int?, price: String?, brand : String?,navController: NavController, viewModel : CartViewModel = hiltViewModel()) {
-   val item = CartItem(id=id,name = name, image = image, price = price, brand = brand, quantity = 1, totalPrice = 0)
-    Button(
-        onClick = {
-            navController.navigate(
-                BottomBarScreen.ShoppingCart.route
-            )
+fun BuyItem(id : Int?,name: String?, image: Int?, price: String?, brand : String? ,navController: NavController, viewModel : CartViewModel = hiltViewModel()) {
+    val shoeSize = viewModel._shoeSize
+    val size = mutableListOf(35, 36, 37, 38, 39, 40, 41, 42, 43, 44)
+    val context = LocalContext.current
+    Column() {
+//
 
-            viewModel.addItem(item)
-        },
-        modifier = Modifier
-            .padding(16.dp)
-            .clip(CircleShape)
-            .background(MaterialTheme.colors.primary)
-            .fillMaxWidth(),
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.Center,
+        SizeNumber(size, shoeSize)
+        val item = CartItem(
+            id = id,
+            name = name,
+            image = image,
+            price = price,
+            brand = brand,
+            quantity = 1,
+            totalPrice = price,
+            size = shoeSize.value
+        )
+        Button(
+            onClick = {
+                    if (shoeSize.value != 0) {
+                        navController.navigate(
+                            BottomBarScreen.ShoppingCart.route
+                        )
+                        viewModel.addItem(item)
+                    }else{
+                        Toast.makeText(context,"Choose a Size", Toast.LENGTH_SHORT).show()
+                    }
+            },
             modifier = Modifier
-                .padding(start = 8.dp)
+                .padding(16.dp)
+                .clip(CircleShape)
+                .background(MaterialTheme.colors.primary)
+                .fillMaxWidth(),
         ) {
-            Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = null)
-            Text(text = "BUY NOW")
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .padding(start = 8.dp)
+            ) {
+                Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = null)
+                Text(text = "BUY NOW")
+            }
         }
     }
 
